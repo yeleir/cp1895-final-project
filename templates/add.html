@@ -7,5 +7,64 @@
 <body>
     <h1>Add a New Game</h1>
     <a href="/">Back to Home</a> | <a href="/games">View Vault</a>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color: red; font-weight: bold;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form action="/add" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+
+        <div>
+            <label for="title">Game Title:</label><br>
+            <input type="text" id="title" name="title">
+        </div>
+        <br>
+
+        <div>
+            <label for="genre">Genre:</label><br>
+            <input type="text" id="genre" name="genre">
+        </div>
+        <br>
+
+        <div>
+            <label for="rating">Personal Rating (out of 10):</label><br>
+            <input type="text" id="rating" name="rating">
+        </div>
+        <br>
+
+        <div>
+            <label for="review">Review:</label><br>
+            <input type="text" id="review" name="review">
+        </div>
+        <br>
+
+        <div>
+            <label for="image">Cover Art (Image file):</label><br>
+            <input type="file" id="image" name="image" accept="image/*">
+        </div>
+        <br>
+
+        <button type="submit">Add to Vault</button>
+    </form>
+
+<script>
+        function validateForm() {
+            let title = document.getElementById("title").value;
+            let genre = document.getElementById("genre").value;
+            let rating = document.getElementById("rating").value;
+            let review = document.getElementById("review").value;
+            let image = document.getElementById("image").value;
+
+            if (title === "" || genre === "" || rating === "" || review === "" || image === "") {
+                alert("Please fill out all fields and select an image before submitting!");
+                return false;
+            }
+            return true;
+
+        }
+    </script>
 </body>
 </html>

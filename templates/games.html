@@ -7,5 +7,23 @@
 <body>
     <h1>The PS2 Vault</h1>
     <a href="/">Back to Home</a> | <a href="/add">Add a Game</a> | <a href="/remove">Remove a Game</a>
+    <hr>
+
+    {% if not vault %}
+        <p>Your vault is currently empty. Go add some classics!</p>
+    {% else %}
+        {% for title, details in vault.items() %}
+            <div style="border: 1px solid black; padding: 15px; margin-bottom: 20px; max-width: 500px;">
+                <h2>{{ title }}</h2>
+
+                <img src="/static/images/{{ details.image }}" alt="{{ title }} cover art" style="max-width: 200px;">
+
+                <p><strong>Genre:</strong> {{ details.genre }}</p>
+                <p><strong>My Rating:</strong> {{ details.rating }}/10</p>
+                <p><strong>Review:</strong> {{ details.review }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+
 </body>
 </html>

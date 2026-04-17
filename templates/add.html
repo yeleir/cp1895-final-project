@@ -3,54 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Add a New Game</h1>
-    <a href="/">Back to Home</a> | <a href="/games">View Vault</a>
-    <hr>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <p style="color: red; font-weight: bold;">{{ message }}</p>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-    <form action="/add" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+<body class="bg-dark text-light">
+    <div class="container mt-5">
+        <h1 class="text-center display-5 mb-4">Add a New Game</h1>
 
-        <div>
-            <label for="title">Game Title:</label><br>
-            <input type="text" id="title" name="title">
+        <div class="text-center mb-4">
+            <a href="/" class="btn btn-outline-light">Back to Home</a>
+            <a href="/games" class="btn btn-primary">View Vault</a>
         </div>
-        <br>
+        <hr class="border-light mb-4">
 
-        <div>
-            <label for="genre">Genre:</label><br>
-            <input type="text" id="genre" name="genre">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-info text-center fw-bold">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="card text-bg-secondary shadow">
+            <div class="card-body p-4">
+                <form action="/add" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+
+                    <div class="mb-3">
+                        <label for="title" class="form-label fw-bold">Game Title:</label>
+                        <input type="text" id="title" name="title" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="genre" class="form-label fw-bold">Genre:</label>
+                        <input type="text" id="genre" name="genre" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="rating" class="form-label fw-bold">Personal Rating (out of 10):</label>
+                        <input type="number" id="rating" name="rating" class="form-control" min="1" max="10">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="review" class="form-label fw-bold">Review:</label>
+                        <textarea id="review" name="review" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="image" class="form-label fw-bold">Cover Art (Image file):</label>
+                        <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Add to Vault</button>
+                </form>
+            </div>
         </div>
-        <br>
+    </div>
 
-        <div>
-            <label for="rating">Personal Rating (out of 10):</label><br>
-            <input type="text" id="rating" name="rating">
-        </div>
-        <br>
-
-        <div>
-            <label for="review">Review:</label><br>
-            <input type="text" id="review" name="review">
-        </div>
-        <br>
-
-        <div>
-            <label for="image">Cover Art (Image file):</label><br>
-            <input type="file" id="image" name="image" accept="image/*">
-        </div>
-        <br>
-
-        <button type="submit">Add to Vault</button>
-    </form>
-
-<script>
+    <script>
         function validateForm() {
             let title = document.getElementById("title").value;
             let genre = document.getElementById("genre").value;
@@ -63,7 +71,6 @@
                 return false;
             }
             return true;
-
         }
     </script>
 </body>

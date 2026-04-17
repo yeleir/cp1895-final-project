@@ -45,9 +45,19 @@ def add_game():
 
     return render_template('add.html')
 
-@app.route('/remove')
+@app.route('/remove', methods=['GET', 'POST'])
 def remove_game():
-    return render_template('remove.html')
+    vault = session.get("games", {})
+
+    if request.method == 'POST':
+        title_to_remove = request.form['title']
+
+        if "games" in session and title_to_remove in session["games"]:
+            session["games"].pop(title_to_remove)
+            flash(f"'{title_to_remove}' was successfully removed!")
+
+        return render_template('remove.html', vault=session.get("games", {}))
+    return render_template('remove.html', vault=vault)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

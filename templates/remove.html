@@ -7,5 +7,32 @@
 <body>
     <h1>Remove a Game</h1>
     <a href="/">Back to Home</a> | <a href="/games">View Vault</a>
+    <hr>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color: red; font-weight: bold;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if not vault %}
+        <p>Your vault is currently empty! There is nothing to remove.</p>
+    {% else %}
+        <form action="/remove" method="POST" onsubmit="return confirm('Are you sure you want to delete this game?');">
+            <label for="title">Select a game to permanently remove:</label><br><br>
+
+            <select id="title" name="title">
+                {% for title in vault.keys() %}
+                    <option value="{{ title }}">{{ title }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+
+            <button type="submit">Remove Game</button>
+        </form>
+    {% endif %}
+
 </body>
 </html>
